@@ -1,0 +1,37 @@
+class Random
+{
+   field int fib_previous, fib_current;
+
+   
+   constructor Random new(int seed)
+   {
+      let fib_previous = seed;
+      let fib_current = 1;
+
+      return this;
+   }
+
+   method void dispose()
+   {
+      do Memory.deAlloc(this);
+
+      return;
+   }
+
+   method void moveNext()
+   {
+      var int tmp;
+      let tmp = Utils.mod(fib_current + fib_previous, 16384);
+      let fib_previous = fib_current;
+      let fib_current = tmp;
+
+      return;
+   }
+
+   method int next(int upperBound)
+   {
+      do moveNext();
+
+      return Utils.mod(fib_current, upperBound);
+   }
+}

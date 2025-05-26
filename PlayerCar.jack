@@ -1,0 +1,82 @@
+// PlayerCar.jack
+class PlayerCar {
+   field int x, y;
+   field int xSize, ySize;
+   field int type;
+
+   constructor PlayerCar new(int Ax, int Ay, int carType) {
+      let x = Ax;
+      let y = Ay;
+      let xSize = 48;
+      let ySize = 32;
+      let type = carType;
+
+      return this;
+   }
+
+   method int GetX() {
+      return 16 * x;
+   }
+
+   method int GetY() {
+      return y;
+   }
+
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method void draw() {
+      var int location;
+      var int memAddress;
+
+      let location = 32 * y + x;
+      let memAddress = 16384 + location;
+
+      if (type = 0) {
+         // Draw Sport Car
+         do Memory.poke(memAddress, -512);
+         do Memory.poke(memAddress + 32, -64);
+         // (more pokes for sport car sprite...)
+         do Memory.poke(memAddress + 994, 2044);
+      } else {
+         // Draw Truck (simpler representation or different pattern)
+         do Memory.poke(memAddress, -2048);
+         do Memory.poke(memAddress + 32, -1024);
+         do Memory.poke(memAddress + 64, -512);
+         do Memory.poke(memAddress + 96, -256);
+         do Memory.poke(memAddress + 128, -128);
+         do Memory.poke(memAddress + 160, -64);
+         do Memory.poke(memAddress + 192, -32);
+         do Memory.poke(memAddress + 224, -16);
+         do Memory.poke(memAddress + 256, -8);
+         do Memory.poke(memAddress + 288, -4);
+         do Memory.poke(memAddress + 320, -2);
+         do Memory.poke(memAddress + 352, -1);
+         do Memory.poke(memAddress + 384, -1);
+         do Memory.poke(memAddress + 416, -2);
+         do Memory.poke(memAddress + 448, -4);
+         do Memory.poke(memAddress + 480, -8);
+         do Memory.poke(memAddress + 512, -16);
+         do Memory.poke(memAddress + 544, -32);
+         do Memory.poke(memAddress + 576, -64);
+         do Memory.poke(memAddress + 608, -128);
+         do Memory.poke(memAddress + 640, -256);
+         do Memory.poke(memAddress + 672, -512);
+         do Memory.poke(memAddress + 704, -1024);
+         do Memory.poke(memAddress + 736, -2048);
+      }
+      return;
+   }
+
+   method void move(int dx, int dy) {
+      if ((1 < (x + dx)) & ((x + dx + xSize) < 511)) {
+         let x = x + dx;
+      }
+      if ((0 < (y + dy)) & ((y + dy + ySize) < 255)) {
+         let y = y + dy;
+      }
+      return;
+   }
+}

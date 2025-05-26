@@ -1,0 +1,23 @@
+function Main.main 1
+label WHILE_EXP0
+push constant 0
+not
+not
+if-goto WHILE_END0
+call Screen.clearScreen 0
+pop temp 0
+push constant 250
+call Sys.wait 1
+pop temp 0
+call RaceGame.new 0
+pop local 0
+push local 0
+call RaceGame.run 1
+pop temp 0
+push local 0
+call RaceGame.dispose 1
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

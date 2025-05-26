@@ -1,0 +1,50 @@
+class Road
+{
+   field int offset, markingLength, spaceLength; 
+   
+   
+   constructor Road new()
+   {
+      let offset = 0;
+      let markingLength = 30;
+      let spaceLength = 108;
+
+      return this;
+   }
+
+   method void dispose()
+   {
+      do Memory.deAlloc(this);
+
+      return;
+   }
+
+   method void drawMarking()
+   {
+      var int i;
+         
+      let i = offset;
+      while (i + markingLength < 511)
+      {
+         do Screen.drawLine(i, 64, i + (markingLength-1), 64);
+         do Screen.drawLine(i, 128, i + (markingLength-1), 128);
+         do Screen.drawLine(i, 192, i + (markingLength-1), 192);
+
+         let i = i + spaceLength;
+      }
+      
+      return;
+   }
+
+   method void moveMarking(int speed)
+   {
+      let offset = offset + speed;
+
+      if (offset > (spaceLength - 1))
+      {
+         let offset = offset - spaceLength;
+      }
+
+      return;
+   }
+}
