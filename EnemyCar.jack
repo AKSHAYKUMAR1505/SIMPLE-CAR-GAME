@@ -1,0 +1,150 @@
+class EnemyCar 
+{
+   field int x, y;
+   field int xSize, ySize;
+   field boolean alive;
+   
+   
+   constructor EnemyCar new(int Ax, int Ay)
+   {
+      let xSize = 48;
+      let ySize = 32;
+
+      do reborn(Ax, Ay);
+
+      return this;
+   }
+
+   method boolean onScreen()
+   {
+      return (((1 < x) & ((x + xSize) < 508)) & ((1 < y) & ((y + ySize) < 255)));
+   }
+   
+   method int GetX()
+   {
+      return x;
+   }
+
+   method int GetY()
+   {
+      return y;
+   }
+
+   method boolean isAlive()
+   {
+      return alive;
+   }
+
+   method void reborn(int Ax, int Ay)
+   {
+      let alive = true;
+
+      let x = Ax;
+      let y = Ay;
+
+      return;
+   }
+
+   method void die()
+   {
+      let x = 0;
+      let y = 0;
+      let alive = false;
+
+      return;
+   }
+
+   method void dispose()
+   {
+      do Memory.deAlloc(this);
+
+      return;
+   }
+
+   method void draw()
+    {
+      // draw the back side of the car
+      do Utils.drawRectangleByOffset(1, 4, 3, 29, x, y);
+      do Utils.drawLineByOffset(2, 3, 4, 3, x, y);
+      do Utils.drawLineByOffset(2, 30, 4, 30, x, y);
+      do Utils.drawLineByOffset(4, 4, 4, 7, x, y);
+      do Utils.drawLineByOffset(4, 26, 4, 29, x, y);
+
+      // draw the top wing of the car
+      do Utils.drawRectangleByOffset(5, 2, 41, 4, x, y);
+      do Utils.drawRectangleByOffset(42, 3, 46, 4, x, y);
+      do Utils.drawPixelByOffset(47, 4, x, y);
+      do Utils.drawLineByOffset(8, 1, 17, 1, x, y);
+      do Utils.drawLineByOffset(30, 1, 39, 1, x, y);
+
+      // draw the lower wing of the car
+      do Utils.drawRectangleByOffset(5, 29, 41, 31, x, y);
+      do Utils.drawRectangleByOffset(42, 29, 46, 30, x, y);
+      do Utils.drawPixelByOffset(47, 29, x, y);
+      do Utils.drawLineByOffset(8, 32, 17, 32, x, y);
+      do Utils.drawLineByOffset(30, 32, 39, 32, x, y);
+        
+      // draw the air intakes of the car
+      do Utils.drawLineByOffset(39, 8, 39, 10, x, y);
+      do Utils.drawLineByOffset(40, 9, 40, 11, x, y);
+      do Utils.drawLineByOffset(39, 23, 39, 25, x, y);
+      do Utils.drawLineByOffset(40, 22, 40, 24, x, y);
+
+      // draw the front side of the car
+      do Utils.drawLineByOffset(42, 5, 44, 5, x, y);
+      do Utils.drawPixelByOffset(47, 5, x, y);
+      do Utils.drawLineByOffset(48, 5, 48, 28, x, y);
+      do Utils.drawPixelByOffset(44, 6, x, y);
+      do Utils.drawLineByOffset(45, 6, 45, 9, x, y);
+      do Utils.drawLineByOffset(46, 8, 46, 25, x, y);
+      do Utils.drawLineByOffset(47, 9, 47, 15, x, y);
+      do Utils.drawLineByOffset(47, 18, 47, 24, x, y);
+      do Utils.drawLineByOffset(45, 24, 45, 27, x, y);
+      do Utils.drawPixelByOffset(44, 27, x, y);
+      do Utils.drawLineByOffset(42, 28, 44, 28, x, y);
+      do Utils.drawPixelByOffset(44, 28, x, y);
+
+      //draw the main part of the car
+      do Utils.drawRectangleByOffset(15, 7, 28, 26, x, y);
+      do Utils.drawLineByOffset(5, 5, 13, 5, x, y);
+      do Utils.drawLineByOffset(21, 5, 23, 5, x, y);
+      do Utils.drawLineByOffset(32, 5, 34, 5, x, y);
+      do Utils.drawPixelByOffset(5, 6, x, y);
+      do Utils.drawLineByOffset(10, 6, 11, 6, x, y);
+      do Utils.drawPixelByOffset(14, 6, x, y);
+      do Utils.drawLineByOffset(20, 6, 22, 6, x, y);
+      do Utils.drawLineByOffset(30, 6, 31, 6, x, y);
+      do Utils.drawLineByOffset(34, 6, 35, 6, x, y);
+      do Utils.drawRectangleByOffset(9, 7, 10, 8, x, y);
+      do Utils.drawRectangleByOffset(35, 7, 36, 9, x, y);
+      do Utils.drawRectangleByOffset(8, 9, 9, 24, x, y);
+      do Utils.drawRectangleByOffset(36, 10, 37, 23, x, y);
+      do Utils.drawRectangleByOffset(9, 25, 10, 26, x, y);
+      do Utils.drawRectangleByOffset(35, 24, 36, 26, x, y);
+      do Utils.drawPixelByOffset(29, 26, x, y);
+      do Utils.drawPixelByOffset(29, 7, x, y);
+      do Utils.drawPixelByOffset(5, 27, x, y);
+      do Utils.drawLineByOffset(10, 27, 11, 27, x, y);
+      do Utils.drawPixelByOffset(14, 27, x, y);
+      do Utils.drawLineByOffset(20, 27, 22, 27, x, y);
+      do Utils.drawLineByOffset(30, 27, 31, 27, x, y);
+      do Utils.drawLineByOffset(34, 27, 35, 27, x, y);
+      do Utils.drawLineByOffset(5, 28, 13, 28, x, y);
+      do Utils.drawLineByOffset(21, 28, 23, 28, x, y);
+      do Utils.drawLineByOffset(32, 28, 34, 28, x, y);
+      do Utils.drawPixelByOffset(13, 6, x, y);
+      do Utils.drawPixelByOffset(14, 7, x, y);
+      do Utils.drawPixelByOffset(14, 26, x, y);
+      do Utils.drawPixelByOffset(13, 27, x, y);
+
+      return;
+    }
+
+   method void move(int dx, int dy)
+   {
+      let y = y + dy;
+      let x = x + dx;
+
+      return;
+   }
+}

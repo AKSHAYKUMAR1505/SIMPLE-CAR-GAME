@@ -1,0 +1,657 @@
+function RaceGame.new 2
+push constant 13
+call Memory.alloc 1
+pop pointer 0
+call Interface.new 0
+pop this 12
+push constant 26
+push constant 96
+call PlayerCar.new 2
+pop this 7
+push constant 16
+pop this 1
+push constant 10
+pop this 5
+push this 1
+call Array.new 1
+pop this 8
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push local 1
+push this 8
+add
+push constant 16
+push constant 16
+call EnemyCar.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 1
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call EnemyCar.die 1
+pop temp 0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+call Road.new 0
+pop this 10
+push constant 10
+pop this 4
+push constant 4
+call Array.new 1
+pop this 9
+push constant 0
+push this 9
+add
+push constant 16
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push this 9
+add
+push constant 80
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push this 9
+add
+push constant 144
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push this 9
+add
+push constant 208
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+pop this 3
+push pointer 0
+return
+function RaceGame.run 2
+push argument 0
+pop pointer 0
+push pointer 0
+call RaceGame.handleStartGame 1
+pop local 0
+push local 0
+call Random.new 1
+pop this 11
+push this 12
+call Interface.getDifficulty 1
+push constant 1
+add
+pop this 6
+push constant 9
+push this 12
+call Interface.getDifficulty 1
+sub
+pop this 2
+push pointer 0
+call RaceGame.handleGameProcess 1
+pop temp 0
+call Screen.clearScreen 0
+pop temp 0
+push this 12
+push this 3
+call Interface.drawFinalWindow 2
+pop temp 0
+push pointer 0
+call RaceGame.handleEndGame 1
+pop temp 0
+push constant 0
+return
+function RaceGame.handleGameProcess 4
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 0
+push constant 0
+pop local 1
+push constant 0
+pop local 2
+label WHILE_EXP0
+push this 0
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 0
+push local 1
+push constant 2500
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push constant 140
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop this 0
+label IF_FALSE1
+push local 0
+push constant 130
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 7
+push constant 0
+push constant 15
+neg
+call PlayerCar.move 3
+pop temp 0
+label IF_FALSE2
+push local 0
+push constant 132
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 7
+push constant 0
+push constant 15
+call PlayerCar.move 3
+pop temp 0
+label IF_FALSE3
+push pointer 0
+call RaceGame.moveEnemies 1
+pop temp 0
+push this 10
+push this 4
+call Road.moveMarking 2
+pop temp 0
+push pointer 0
+call RaceGame.handleCarsDeaths 1
+pop local 3
+push this 3
+push local 3
+add
+pop this 3
+push pointer 0
+push local 3
+call RaceGame.handleSpeedIncreasing 2
+pop temp 0
+push pointer 0
+call RaceGame.drawFrame 1
+pop temp 0
+push constant 0
+pop local 1
+push local 2
+push constant 1
+add
+pop local 2
+label IF_FALSE0
+push local 2
+push this 2
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call RaceGame.trySpawnEnemy 1
+pop temp 0
+push constant 0
+pop local 2
+label IF_FALSE4
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function RaceGame.handleSpeedIncreasing 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 3
+push constant 5
+call Utils.mod 2
+push constant 0
+eq
+push this 3
+push constant 0
+gt
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 4
+push this 6
+add
+pop this 4
+push this 5
+push this 6
+add
+pop this 5
+label IF_FALSE1
+label IF_FALSE0
+push constant 0
+return
+function RaceGame.handleStartGame 1
+push argument 0
+pop pointer 0
+call Keyboard.keyPressed 0
+pop local 0
+push this 12
+call Interface.drawWelcomeWindow 1
+pop temp 0
+push pointer 0
+push local 0
+call RaceGame.handleDifficultyChoosing 2
+return
+function RaceGame.handleDifficultyChoosing 1
+push argument 0
+pop pointer 0
+label WHILE_EXP0
+push argument 1
+push constant 128
+eq
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop argument 1
+push local 0
+push constant 1
+add
+push constant 32767
+call Utils.mod 2
+pop local 0
+push argument 1
+push constant 131
+eq
+push argument 1
+push constant 133
+eq
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push argument 1
+call RaceGame.handleChangingDifficulty 2
+pop temp 0
+label IF_FALSE0
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+return
+function RaceGame.handleChangingDifficulty 0
+push argument 0
+pop pointer 0
+call Screen.clearScreen 0
+pop temp 0
+push argument 1
+push constant 131
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 12
+push constant 1
+neg
+call Interface.moveDifficultyPointer 2
+pop temp 0
+label IF_FALSE0
+push argument 1
+push constant 133
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 12
+push constant 1
+call Interface.moveDifficultyPointer 2
+pop temp 0
+label IF_FALSE1
+push this 12
+call Interface.drawWelcomeWindow 1
+pop temp 0
+push constant 200
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function RaceGame.handleEndGame 0
+push argument 0
+pop pointer 0
+label WHILE_EXP0
+call Keyboard.keyPressed 0
+push constant 128
+eq
+not
+not
+if-goto WHILE_END0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function RaceGame.drawFrame 0
+push argument 0
+pop pointer 0
+call Screen.clearScreen 0
+pop temp 0
+push this 10
+call Road.drawMarking 1
+pop temp 0
+push this 7
+call PlayerCar.draw 1
+pop temp 0
+push pointer 0
+call RaceGame.drawEnemies 1
+pop temp 0
+push this 12
+push this 3
+call Interface.drawPlayerScore 2
+pop temp 0
+push constant 0
+return
+function RaceGame.handleCarsDeaths 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push local 1
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call EnemyCar.isAlive 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+call EnemyCar.onScreen 1
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 2
+push constant 1
+add
+pop local 2
+push local 0
+call EnemyCar.die 1
+pop temp 0
+label IF_FALSE1
+push pointer 0
+push local 0
+call EnemyCar.GetX 1
+push local 0
+call EnemyCar.GetY 1
+push this 7
+call PlayerCar.GetX 1
+push this 7
+call PlayerCar.GetY 1
+call RaceGame.conflictHappened 5
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+pop this 0
+label IF_FALSE2
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push local 2
+return
+function RaceGame.moveEnemies 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push local 1
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call EnemyCar.isAlive 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+push this 5
+push constant 0
+call EnemyCar.move 3
+pop temp 0
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function RaceGame.drawEnemies 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push this 1
+lt
+not
+if-goto WHILE_END0
+push local 1
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call EnemyCar.isAlive 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+call EnemyCar.draw 1
+pop temp 0
+label IF_FALSE0
+push local 1
+push constant 1
+add
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function RaceGame.trySpawnEnemy 4
+push argument 0
+pop pointer 0
+push this 11
+push constant 5
+call Random.next 2
+pop local 2
+push local 2
+push constant 4
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop local 3
+push local 3
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 1
+label WHILE_EXP0
+push local 3
+push this 1
+push constant 1
+sub
+lt
+push local 1
+call EnemyCar.isAlive 1
+and
+not
+if-goto WHILE_END0
+push local 3
+push constant 1
+add
+pop local 3
+push local 3
+push this 8
+add
+pop pointer 1
+push that 0
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+call EnemyCar.isAlive 1
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 1
+push constant 0
+push local 2
+push this 9
+add
+pop pointer 1
+push that 0
+call EnemyCar.reborn 3
+pop temp 0
+label IF_FALSE1
+label IF_FALSE0
+push constant 0
+return
+function RaceGame.conflictHappened 8
+push argument 0
+pop pointer 0
+push argument 1
+push constant 47
+add
+pop local 0
+push argument 2
+pop local 1
+push argument 2
+push constant 31
+add
+pop local 2
+push argument 3
+pop local 3
+push argument 4
+pop local 4
+push argument 4
+push constant 31
+add
+pop local 5
+push local 4
+push local 2
+gt
+not
+push local 4
+push local 1
+lt
+not
+and
+push local 3
+push local 0
+gt
+not
+and
+pop local 6
+push local 5
+push local 2
+gt
+not
+push local 5
+push local 1
+lt
+not
+and
+push local 3
+push local 0
+gt
+not
+and
+pop local 7
+push local 6
+push local 7
+or
+return
+function RaceGame.dispose 0
+push argument 0
+pop pointer 0
+push this 7
+call PlayerCar.dispose 1
+pop temp 0
+push this 8
+call Memory.deAlloc 1
+pop temp 0
+push this 9
+call Memory.deAlloc 1
+pop temp 0
+push this 10
+call Road.dispose 1
+pop temp 0
+push this 11
+call Random.dispose 1
+pop temp 0
+push this 12
+call Interface.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
