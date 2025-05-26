@@ -1,0 +1,87 @@
+function Utils.mod 0
+label WHILE_EXP0
+push argument 0
+push argument 1
+push constant 1
+sub
+gt
+not
+if-goto WHILE_END0
+push argument 0
+push argument 1
+sub
+pop argument 0
+goto WHILE_EXP0
+label WHILE_END0
+label WHILE_EXP1
+push argument 0
+push constant 0
+lt
+not
+if-goto WHILE_END1
+push argument 0
+push argument 1
+add
+pop argument 0
+goto WHILE_EXP1
+label WHILE_END1
+push argument 0
+return
+function Utils.abs 0
+push argument 0
+push constant 0
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 0
+neg
+pop argument 0
+label IF_FALSE0
+push argument 0
+return
+function Utils.drawRectangleByOffset 0
+push argument 0
+push argument 4
+add
+push argument 1
+push argument 5
+add
+push argument 2
+push argument 4
+add
+push argument 3
+push argument 5
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Utils.drawLineByOffset 0
+push argument 0
+push argument 4
+add
+push argument 1
+push argument 5
+add
+push argument 2
+push argument 4
+add
+push argument 3
+push argument 5
+add
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function Utils.drawPixelByOffset 0
+push argument 0
+push argument 2
+add
+push argument 1
+push argument 3
+add
+call Screen.drawPixel 2
+pop temp 0
+push constant 0
+return

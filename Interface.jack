@@ -1,0 +1,141 @@
+class Interface
+{
+   field string welcomeMessage1, welcomeMessage2, welcomeMessage3;
+   field string scoreMessage;
+   field string finalMessage1, finalMessage2, finalMessage3;
+   field string easyLevelMessage, mediumLevelMessage, hardLevelMessage;
+   field Array difficultyMessages;
+
+   field int difficultyPointerX;
+   field Array difficultyPointerYPositions;
+
+   field int currentDifficulty; // 0 - easy, 1 - medium, 2 - hard
+   
+   
+   constructor Interface new()
+   {
+      // initialize strings
+      let welcomeMessage1 = "Controls: up / down arrows ";
+      let welcomeMessage2 = "Press esc to exit the current race";
+      let welcomeMessage3 = "Choose the level of difficulty:";
+
+      let easyLevelMessage = "Easy";
+      let mediumLevelMessage = "Medium";
+      let hardLevelMessage = "Hard";
+
+      let scoreMessage = "score: ";
+
+      let finalMessage1 = "You lose";
+      let finalMessage2 = "Your game score: ";
+      let finalMessage3 = "Press enter to continue";
+
+      let difficultyMessages = Array.new(3);
+      let difficultyMessages[0] = "easy / ";
+      let difficultyMessages[1] = "medium / ";
+      let difficultyMessages[2] = "hard / ";
+
+
+      // initialize cursor positions
+      let difficultyPointerX = 200; 
+      let difficultyPointerYPositions = Array.new(3);
+      let difficultyPointerYPositions[0] = 135;
+      let difficultyPointerYPositions[1] = 145;
+      let difficultyPointerYPositions[2] = 155;
+
+      let currentDifficulty = 0;
+
+      return this;
+   }
+
+   method int getDifficulty()
+   {
+      return currentDifficulty;
+   }
+
+   method void drawWelcomeWindow()
+   {
+      do Output.moveCursor(9, 16);
+      do Output.printString(welcomeMessage1);
+      do Output.moveCursor(10, 16);
+      do Output.printString(welcomeMessage2);
+      do Output.moveCursor(11, 16);
+      do Output.printString(welcomeMessage3);
+
+      do Output.moveCursor(12, 28);
+      do Output.printString(easyLevelMessage);
+      do Output.moveCursor(13, 28);
+      do Output.printString(mediumLevelMessage);
+      do Output.moveCursor(14, 28);
+      do Output.printString(hardLevelMessage);
+
+      do drawDifficultyPointer();
+
+      return;
+   }
+
+
+   method void drawDifficultyPointer()
+   {
+      do Utils.drawLineByOffset(0, 0, 0, 8, difficultyPointerX, difficultyPointerYPositions[currentDifficulty]);
+      do Utils.drawLineByOffset(1, 1, 1, 7, difficultyPointerX, difficultyPointerYPositions[currentDifficulty]);
+      do Utils.drawLineByOffset(2, 2, 2, 6, difficultyPointerX, difficultyPointerYPositions[currentDifficulty]);
+      do Utils.drawLineByOffset(3, 3, 3, 5, difficultyPointerX, difficultyPointerYPositions[currentDifficulty]);
+      do Utils.drawPixelByOffset(4, 4, difficultyPointerX, difficultyPointerYPositions[currentDifficulty]);
+
+      return;
+   }
+
+
+   method void drawPlayerScore(int score)
+   {
+      do Output.moveCursor(0, 0);
+      do Output.printString(difficultyMessages[currentDifficulty]);
+      do Output.printString(scoreMessage);
+      do Output.printInt(score);
+   
+      return;
+   }
+
+   method void drawFinalWindow(int score)
+   {
+      do Output.moveCursor(10, 18);
+      do Output.printString(finalMessage1);
+      do Output.moveCursor(11, 18);
+      do Output.printString(finalMessage2);
+      do Output.printInt(score);
+      do Output.moveCursor(12, 18);
+      do Output.printString(finalMessage3);
+
+      return;
+   }
+
+   method void moveDifficultyPointer(int delta)
+   {
+      let currentDifficulty = Utils.mod(currentDifficulty + delta, 3);
+
+      return;
+   }
+
+   method void dispose()
+   {
+      do Memory.deAlloc(welcomeMessage1);
+      do Memory.deAlloc(welcomeMessage2);
+      do Memory.deAlloc(welcomeMessage3);
+
+      do Memory.deAlloc(scoreMessage);
+
+      do Memory.deAlloc(finalMessage1);
+      do Memory.deAlloc(finalMessage2);
+      do Memory.deAlloc(finalMessage3);
+
+      do Memory.deAlloc(easyLevelMessage);
+      do Memory.deAlloc(mediumLevelMessage);
+      do Memory.deAlloc(hardLevelMessage);
+
+      do Memory.deAlloc(difficultyPointerYPositions);
+
+      do Memory.deAlloc(difficultyMessages);
+
+      return;
+   }
+}
