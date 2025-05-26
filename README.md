@@ -20,10 +20,14 @@ This file basically contains the things which are present on the screen while ga
 As it displays our team project title 
 It displays time taken by the player
 It also displays the no of lives remain by the player
+
+
 **ControlGame.jack**
 It contain the logic and implementation of what to do according to the key pressed
 It also contain the logic of life of player remaining to play
-It also contain the logic to run the entire game 
+It also contain the logic to run the entire game.
+
+
 **Road.jack**
 It contain the implementation of road 
 It also contain the logic of moving road.
